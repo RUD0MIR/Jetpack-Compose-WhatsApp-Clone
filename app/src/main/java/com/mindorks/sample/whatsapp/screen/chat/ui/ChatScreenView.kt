@@ -11,7 +11,7 @@ import com.mindorks.sample.whatsapp.data.model.User
 @Composable
 fun ChatScreenView(user: User, onBackIconClick: () -> Unit, onMessageSend: (String) -> Unit) {
     Scaffold(
-        bottomBar = { EditText(onMessageSend) },
+        bottomBar = { ChatTextField(onMessageSend) },
         topBar = {
             ChatTopBar(user, onBackIconClick)
         },

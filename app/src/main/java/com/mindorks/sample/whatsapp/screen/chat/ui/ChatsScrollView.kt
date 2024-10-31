@@ -13,23 +13,37 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mindorks.sample.whatsapp.data.model.Conversation
-import com.mindorks.sample.whatsapp.ui.DarkerGreen
+import com.mindorks.sample.whatsapp.data.model.User
+import com.mindorks.sample.whatsapp.ui.DarkGray
+import com.mindorks.sample.whatsapp.ui.DarkestGreen
+import com.mindorks.sample.whatsapp.ui.Green
 import com.mindorks.sample.whatsapp.ui.White
 
 @Composable
 fun ChatsScrollView(modifier: Modifier = Modifier, chat: List<Conversation>) {
     LazyColumn(
-        modifier = Modifier.fillMaxHeight().background(color = DarkerGreen).padding(10.dp)
-            .padding(bottom = 40.dp)
+        modifier = modifier
+            .fillMaxHeight()
+            .background(color = DarkestGreen)
+            .padding(horizontal = 16.dp)
     ) {
         items(chat) {
             if (it.id == 2) {
-                SetupReceipientChat(it)
+                Message(
+                    text = it.chat,
+                    isRightAligned = true,
+                    color = Green
+                )
             } else {
-                SetupMyChat(it)
+                Message(
+                    text = it.chat,
+                    isRightAligned = false,
+                    color = DarkGray
+                )
             }
             Spacer(modifier = Modifier.padding(8.dp))
         }
@@ -37,50 +51,45 @@ fun ChatsScrollView(modifier: Modifier = Modifier, chat: List<Conversation>) {
 }
 
 @Composable
-fun SetupMyChat(chat: Conversation) {
-    Box(
-        modifier = Modifier
-            .background(Color(38, 82, 72))
-            .fillMaxWidth()
-            .padding(80.dp, end = 10.dp)
-            .clip(RoundedCornerShape(8.dp)),
+fun Message(text: String, isRightAligned: Boolean, color: Color) {
+    Row(
+        Modifier.fillMaxWidth()
     ) {
-        Row(modifier = Modifier.padding(all = 10.dp)) {
-            Column(modifier = Modifier.weight(3.0f, true)) {
-                Text(
-                    text = chat.chat,
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = White
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+        val spacersWeight = 0.2f
+
+        if (isRightAligned) {
+            Spacer(modifier = Modifier.weight(spacersWeight))
+        }
+
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .clip(RoundedCornerShape(8.dp))
+                .background(color)
+        ) {
+            Text(
+                modifier = Modifier.padding(8.dp),
+                text = text,
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = White
+                ),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+
+        if (!isRightAligned) {
+            Spacer(modifier = Modifier.weight(spacersWeight))
         }
     }
 }
 
+@Preview
 @Composable
-fun SetupReceipientChat(chat: Conversation) {
-    Box(
-        modifier = Modifier.background(Color(62, 61, 64))
-            .fillMaxWidth()
-            .padding(10.dp, end = 80.dp)
-            .clip(RoundedCornerShape(8.dp)),
-    ) {
-        Row(modifier = Modifier.padding(10.dp)) {
-            Column(modifier = Modifier.weight(3.0f, true)) {
-                Text(
-                    text = chat.chat,
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = White
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        }
-    }
+private fun ChatScreenPreview() {
+    ChatScreenView(
+        user = User(id = 0, name = "name", imageUrl = ""),
+        onBackIconClick = {}
+    ) {}
 }

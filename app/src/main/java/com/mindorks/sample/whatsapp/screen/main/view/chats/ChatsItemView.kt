@@ -1,6 +1,5 @@
 package com.mindorks.sample.whatsapp.screen.main.view.chats
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,21 +9,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.rememberImagePainter
 import com.mindorks.sample.whatsapp.data.model.Chat
 import com.mindorks.sample.whatsapp.data.model.User
+import com.mindorks.sample.whatsapp.screen.chat.ui.CircularCoilImage
 import com.mindorks.sample.whatsapp.ui.BrightGreen
 import com.mindorks.sample.whatsapp.ui.DarkerGreen
 import com.mindorks.sample.whatsapp.ui.Gray
 import com.mindorks.sample.whatsapp.ui.White
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ChatsItemView(chat: Chat, loadNextScreen: (User) -> Unit) {
     Box(
@@ -43,14 +39,11 @@ fun ChatsItemView(chat: Chat, loadNextScreen: (User) -> Unit) {
                 top = 4.dp, bottom = 4.dp
             )) {
         Row(modifier = Modifier.padding(10.dp)) {
-            Box(modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)) {
-                Image(
-                    painter = rememberImagePainter(chat.url),
-                    contentDescription = "My content description",
-                )
-            }
+            CircularCoilImage(
+                modifier = Modifier.size(40.dp),
+                chat.url
+            )
+
             Spacer(modifier = Modifier.defaultMinSize(12.dp))
             Column(modifier = Modifier.weight(3.0f, true)) {
                 Text(chat.name, color = White)
