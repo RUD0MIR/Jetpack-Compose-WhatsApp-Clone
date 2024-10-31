@@ -21,18 +21,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.mindorks.sample.whatsapp.R
-import com.mindorks.sample.whatsapp.ui.topBarColor
+import com.mindorks.sample.whatsapp.ui.DarkGreen
 import kotlinx.coroutines.launch
 
 
 @Composable
 fun EditText(onMessageSend: (String) -> Unit) {
-
     val textState = remember { mutableStateOf(TextFieldValue()) }
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
 
-    Box(Modifier.background(topBarColor)) {
+    Box(Modifier.background(DarkGreen)) {
         Row(
             modifier = Modifier
                 .padding(16.dp)

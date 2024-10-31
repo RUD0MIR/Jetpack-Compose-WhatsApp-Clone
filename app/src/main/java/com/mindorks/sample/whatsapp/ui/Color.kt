@@ -2,11 +2,9 @@ package com.mindorks.sample.whatsapp.ui
 
 import androidx.compose.ui.graphics.Color
 
-val primaryWhatsAppColor = Color(0xFFBB86FC)
-val purple500 = Color(0xFF6200EE)
-val purple700 = Color(0xFF3700B3)
-val teal200 = Color(0xFF03DAC5)
-
-val Green = Color(3, 183, 144)
-val topBarColor = Color(33, 46, 55)
-val LightGreen = Color(21, 31, 40)
+val BrightGreen = Color(0xFF0E9F7E)
+val DarkGreen = Color(0xFF1C2D37)
+val DarkerGreen = Color(0xFF162731)
+val DarkestGreen = Color(0xFF0E1F29)
+val White = Color(0xFFE8EEF2)
+val Gray = Color(0xFF7A8183)

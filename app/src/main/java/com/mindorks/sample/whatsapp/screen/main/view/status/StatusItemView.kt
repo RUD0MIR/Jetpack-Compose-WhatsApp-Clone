@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.mindorks.sample.whatsapp.data.model.Status
-import com.mindorks.sample.whatsapp.ui.Green
+import com.mindorks.sample.whatsapp.ui.BrightGreen
+import com.mindorks.sample.whatsapp.ui.White
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
@@ -28,16 +29,16 @@ fun StatusItemView(status: Status) {
             Box(modifier = Modifier.size(40.dp).clip(CircleShape)) {
                 Image(
                     painter = rememberImagePainter(status.imageUrl),
-                    contentDescription = "My content description",
+                    contentDescription = null,
                 )
             }
             Column(modifier = Modifier.padding(start = 16.dp)) {
-                Text(status.name)
+                Text(status.name, color = White)
                 Text(
                     status.time,
                     style = TextStyle(
                         fontSize = 12.sp,
-                        color = Green,
+                        color = BrightGreen,
                         textAlign = TextAlign.Center
                     ),
                     maxLines = 1,

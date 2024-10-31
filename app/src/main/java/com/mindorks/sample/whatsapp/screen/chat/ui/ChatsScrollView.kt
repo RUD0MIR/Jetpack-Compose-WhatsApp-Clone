@@ -16,12 +16,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mindorks.sample.whatsapp.data.model.Conversation
-import com.mindorks.sample.whatsapp.ui.LightGreen
+import com.mindorks.sample.whatsapp.ui.DarkerGreen
+import com.mindorks.sample.whatsapp.ui.White
 
 @Composable
-fun ChatsScrollView(chat: List<Conversation>) {
+fun ChatsScrollView(modifier: Modifier = Modifier, chat: List<Conversation>) {
     LazyColumn(
-        modifier = Modifier.fillMaxHeight().background(color = LightGreen).padding(10.dp)
+        modifier = Modifier.fillMaxHeight().background(color = DarkerGreen).padding(10.dp)
             .padding(bottom = 40.dp)
     ) {
         items(chat) {
@@ -50,7 +51,7 @@ fun SetupMyChat(chat: Conversation) {
                     text = chat.chat,
                     style = TextStyle(
                         fontSize = 16.sp,
-                        color = Color.White
+                        color = White
                     ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -74,7 +75,7 @@ fun SetupReceipientChat(chat: Conversation) {
                     text = chat.chat,
                     style = TextStyle(
                         fontSize = 16.sp,
-                        color = Color.White
+                        color = White
                     ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis

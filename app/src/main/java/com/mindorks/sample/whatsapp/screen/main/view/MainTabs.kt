@@ -1,25 +1,25 @@
 package com.mindorks.sample.whatsapp.screen.main.view
 
-import androidx.compose.foundation.background
+
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.mindorks.sample.whatsapp.ui.topBarColor
+import com.mindorks.sample.whatsapp.ui.BrightGreen
+import com.mindorks.sample.whatsapp.ui.DarkGreen
+import com.mindorks.sample.whatsapp.ui.Gray
 
 data class ScreenState(var state: Screen = Screen.CALLS) {
 
     enum class Screen(
         val title: String = "Tab"
     ) {
-        CALLS(title = "Calls"),
+        STATUS(title = "Status"),
         CHATS(title = "Chats"),
-        STATUS(title = "Status")
+        CALLS(title = "Calls"),
     }
 }
 
@@ -28,7 +28,7 @@ fun TabsPanel(
     screenState: ScreenState,
     onNavigate: (ScreenState.Screen) -> Unit,
 ) {
-    val (selectedTab, setSelectedTab) = remember {
+    val (selectedTabIndex, setSelectedTab) = remember {
         mutableIntStateOf(
             ScreenState.Screen.entries.indexOf(screenState.state)
         )
@@ -37,19 +37,25 @@ fun TabsPanel(
     val tabs = ScreenState.Screen.entries
 
     TabRow(
-        modifier = Modifier.background(topBarColor),
-        selectedTabIndex = selectedTab,
+        containerColor = DarkGreen,
+        selectedTabIndex = selectedTabIndex,
         tabs = {
             tabs.forEachIndexed { index, tab ->
                 Tab(
-                    text = { Text(text = tab.title.uppercase(), color = Color.White) },
-                    selected = index == selectedTab,
+                    text = {
+                        Text(
+                            text = tab.title.uppercase(),
+                            color = if (index == selectedTabIndex) BrightGreen else Gray
+                        )
+                    },
+                    selected = index == selectedTabIndex,
                     onClick = {
                         setSelectedTab(index)
                         onNavigate(tab)
                     }
                 )
             }
-        }
+        },
+        divider = {}
     )
 }

@@ -19,8 +19,10 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.mindorks.sample.whatsapp.data.model.Chat
 import com.mindorks.sample.whatsapp.data.model.User
-import com.mindorks.sample.whatsapp.ui.Green
-import com.mindorks.sample.whatsapp.ui.LightGreen
+import com.mindorks.sample.whatsapp.ui.BrightGreen
+import com.mindorks.sample.whatsapp.ui.DarkerGreen
+import com.mindorks.sample.whatsapp.ui.Gray
+import com.mindorks.sample.whatsapp.ui.White
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
@@ -37,10 +39,13 @@ fun ChatsItemView(chat: Chat, loadNextScreen: (User) -> Unit) {
                     )
                 )
             }
-            .padding(top = 4.dp, bottom = 4.dp
-        )) {
+            .padding(
+                top = 4.dp, bottom = 4.dp
+            )) {
         Row(modifier = Modifier.padding(10.dp)) {
-            Box(modifier = Modifier.size(40.dp).clip(CircleShape)) {
+            Box(modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)) {
                 Image(
                     painter = rememberImagePainter(chat.url),
                     contentDescription = "My content description",
@@ -48,7 +53,7 @@ fun ChatsItemView(chat: Chat, loadNextScreen: (User) -> Unit) {
             }
             Spacer(modifier = Modifier.defaultMinSize(12.dp))
             Column(modifier = Modifier.weight(3.0f, true)) {
-                Text(chat.name)
+                Text(chat.name, color = White)
                 Spacer(modifier = Modifier.defaultMinSize(2.dp))
                 UserChat(chat)
             }
@@ -68,7 +73,7 @@ fun UserChat(chat: Chat) {
         text = chat.chat,
         style = TextStyle(
             fontSize = 16.sp,
-            color = Color.Gray
+            color = Gray
         ),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
@@ -78,19 +83,17 @@ fun UserChat(chat: Chat) {
 
 @Composable
 fun MessageTime(chat: Chat) {
-
     Text(
         text = chat.time,
         style = TextStyle(
             fontSize = 12.sp,
-            color = Green
+            color = BrightGreen
         )
     )
 }
 
 @Composable
 fun UnreadCount(chat: Chat) {
-
     if (chat.unreadCount != "0") {
         SetupUnreadCount(chat.unreadCount)
     }
@@ -98,21 +101,19 @@ fun UnreadCount(chat: Chat) {
 
 @Composable
 fun SetupUnreadCount(count: String) {
-
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(
-            modifier = Modifier.defaultMinSize(20.dp)
-                .background(Green)
-                .clip(CircleShape),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = count,
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    color = LightGreen
-                )
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .size(20.dp)
+            .background(BrightGreen),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = count,
+            style = TextStyle(
+                fontSize = 12.sp,
+                color = DarkerGreen
             )
-        }
+        )
     }
 }

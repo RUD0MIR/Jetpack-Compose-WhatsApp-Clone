@@ -1,7 +1,9 @@
 package com.mindorks.sample.whatsapp.screen.chat.ui
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.mindorks.sample.whatsapp.data.local.chat
 import com.mindorks.sample.whatsapp.data.model.User
 
@@ -14,8 +16,7 @@ fun ChatScreenView(user: User, onBackIconClick: () -> Unit, onMessageSend: (Stri
             ChatTopBar(user, onBackIconClick)
         },
         content = {
-            ChatsScrollView(chat.toList())
-            it
+            ChatsScrollView(modifier = Modifier.padding(it), chat.toList())
        },
     )
 }
