@@ -1,57 +1,68 @@
 package com.mindorks.sample.whatsapp.screen.main.view.chats
 
-import androidx.compose.foundation.Box
-import androidx.compose.foundation.Text
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import com.mindorks.sample.whatsapp.data.model.Chat
 import com.mindorks.sample.whatsapp.data.model.User
-import com.mindorks.sample.whatsapp.util.ImageLoader
-import com.mindorks.sample.whatsapp.util.colorGreen
-import com.mindorks.sample.whatsapp.util.colorLightGreen
+import com.mindorks.sample.whatsapp.ui.Green
+import com.mindorks.sample.whatsapp.ui.LightGreen
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ChatsItemView(chat: Chat, loadNextScreen: (User) -> Unit) {
     Box(
-        modifier = Modifier.fillMaxWidth().clickable {
-            loadNextScreen(
-                User(
-                    id = 2,
-                    chat.name,
-                    chat.url
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                loadNextScreen(
+                    User(
+                        id = 2,
+                        chat.name,
+                        chat.url
+                    )
                 )
-            )
-        } + Modifier.padding(top = 4.dp, bottom = 4.dp)) {
-        Row(modifier = Modifier.padding(10.dp)) {
-            Box(shape = CircleShape, modifier = Modifier.size(40.dp)) {
-                ImageLoader(chat.url)
             }
-            Spacer(modifier = Modifier.preferredSize(12.dp))
+            .padding(top = 4.dp, bottom = 4.dp
+        )) {
+        Row(modifier = Modifier.padding(10.dp)) {
+            Box(modifier = Modifier.size(40.dp).clip(CircleShape)) {
+                Image(
+                    painter = rememberImagePainter(chat.url),
+                    contentDescription = "My content description",
+                )
+            }
+            Spacer(modifier = Modifier.defaultMinSize(12.dp))
             Column(modifier = Modifier.weight(3.0f, true)) {
                 Text(chat.name)
-                Spacer(modifier = Modifier.preferredSize(2.dp))
-                userChat(chat)
+                Spacer(modifier = Modifier.defaultMinSize(2.dp))
+                UserChat(chat)
             }
-            Column(modifier = Modifier.weight(1.0f, true), horizontalGravity = Alignment.End) {
+            Column(modifier = Modifier.weight(1.0f, true), horizontalAlignment = Alignment.End) {
                 MessageTime(chat)
-                Spacer(modifier = Modifier.preferredSize(2.dp))
-                unreadCount(chat)
+                Spacer(modifier = Modifier.defaultMinSize(2.dp))
+                UnreadCount(chat)
             }
         }
     }
 }
 
 @Composable
-fun userChat(chat: Chat) {
+fun UserChat(chat: Chat) {
 
     Text(
         text = chat.chat,
@@ -72,34 +83,34 @@ fun MessageTime(chat: Chat) {
         text = chat.time,
         style = TextStyle(
             fontSize = 12.sp,
-            color = colorGreen()
+            color = Green
         )
     )
 }
 
 @Composable
-fun unreadCount(chat: Chat) {
+fun UnreadCount(chat: Chat) {
 
     if (chat.unreadCount != "0") {
-        setupUnreadCount(chat.unreadCount)
+        SetupUnreadCount(chat.unreadCount)
     }
 }
 
 @Composable
-fun setupUnreadCount(count: String) {
+fun SetupUnreadCount(count: String) {
 
-    Column(horizontalGravity = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
-            modifier = Modifier.preferredSize(20.dp),
-            backgroundColor = colorGreen(),
-            gravity = Alignment.Center,
-            shape = CircleShape
+            modifier = Modifier.defaultMinSize(20.dp)
+                .background(Green)
+                .clip(CircleShape),
+            contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = count,
                 style = TextStyle(
                     fontSize = 12.sp,
-                    color = colorLightGreen()
+                    color = LightGreen
                 )
             )
         }

@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Text
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Surface
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,7 +27,7 @@ import com.mindorks.sample.whatsapp.screen.main.view.call.CallsView
 import com.mindorks.sample.whatsapp.screen.main.view.chats.ChatsView
 import com.mindorks.sample.whatsapp.screen.main.view.status.StatusView
 import com.mindorks.sample.whatsapp.ui.WhatsAppTheme
-import com.mindorks.sample.whatsapp.util.colorTopBar
+import com.mindorks.sample.whatsapp.ui.topBarColor
 
 class MainFragment : Fragment() {
 
@@ -35,12 +37,11 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return ComposeView(requireContext()).apply {
-
             setContent {
                 WhatsAppTheme {
-                    onScreenSelected {
+                    NavHost {
                         viewModel.navigateTo(it)
                     }
                 }
@@ -48,33 +49,31 @@ class MainFragment : Fragment() {
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun onScreenSelected(onNavigate: (ScreenState.Screen) -> Unit) {
-
+    private fun NavHost(onNavigate: (ScreenState.Screen) -> Unit) {
         val screenState: State<ScreenState?> =
             viewModel.screenState.observeAsState(viewModel.screenState.value)
 
         Column {
             TopAppBar(
+                modifier = Modifier.background(topBarColor),
                 title = { Text(getString(R.string.whatsapp), color = Color.White) },
-                backgroundColor = colorTopBar(),
-                elevation = 0.dp
             )
             screenState.value?.let { TabsPanel(it, onNavigate) }
             Surface {
                 when (screenState.value?.state) {
-
                     ScreenState.Screen.CALLS -> CallsView()
 
-                    ScreenState.Screen.CHATS -> ChatsView {
+                    ScreenState.Screen.CHATS -> ChatsView() {
                         val action = MainFragmentDirections.actionMainFragmentToChatFragment(
                             it.name,
                             it.imageUrl
                         )
                         findNavController().navigate(action)
                     }
-
                     ScreenState.Screen.STATUS -> StatusView()
+                    else -> {}
                 }
             }
         }

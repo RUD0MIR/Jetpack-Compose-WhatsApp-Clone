@@ -12,14 +12,13 @@ import com.mindorks.sample.whatsapp.data.model.User
 import com.mindorks.sample.whatsapp.screen.chat.ui.ChatScreenView
 import com.mindorks.sample.whatsapp.ui.WhatsAppTheme
 
-@ExperimentalFoundationApi
-class ChatFragment : Fragment() {
 
+class ChatFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val userName = arguments?.getString("userName") ?: ""
         val userImage = arguments?.getString("userImage") ?: ""

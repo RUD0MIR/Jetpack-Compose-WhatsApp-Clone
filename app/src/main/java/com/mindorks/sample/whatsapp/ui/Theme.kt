@@ -1,30 +1,19 @@
 package com.mindorks.sample.whatsapp.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val DarkColorPalette = darkColors(
+private val DarkColorPalette = darkColorScheme(
     primary = primaryWhatsAppColor,
-    primaryVariant = primaryWhatsAppColor,
     secondary = primaryWhatsAppColor
 )
 
-private val LightColorPalette = lightColors(
+private val LightColorPalette = lightColorScheme(
     primary = primaryWhatsAppColor,
-    primaryVariant = primaryWhatsAppColor,
     secondary = primaryWhatsAppColor
-
-    /* Other default colors to override
-background = Color.White,
-surface = Color.White,
-onPrimary = Color.White,
-onSecondary = Color.Black,
-onBackground = Color.Black,
-onSurface = Color.Black,
-*/
 )
 
 @Composable
@@ -36,7 +25,6 @@ fun WhatsAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
     }
 
     MaterialTheme(
-        colors = colors,
         typography = typography,
         shapes = shapes,
         content = content

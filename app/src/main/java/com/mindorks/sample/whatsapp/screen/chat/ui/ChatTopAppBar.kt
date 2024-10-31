@@ -1,47 +1,58 @@
 package com.mindorks.sample.whatsapp.screen.chat.ui
 
-import androidx.compose.foundation.Box
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.IconButton
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import com.mindorks.sample.whatsapp.R
 import com.mindorks.sample.whatsapp.data.model.User
-import com.mindorks.sample.whatsapp.util.ImageLoader
-import com.mindorks.sample.whatsapp.util.colorTopBar
+import com.mindorks.sample.whatsapp.ui.topBarColor
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalCoilApi::class)
 @Composable
 fun ChatTopBar(user: User, onBackIconClick: () -> Unit) {
 
     Column {
         TopAppBar(
-            backgroundColor = colorTopBar(),
+            modifier = Modifier.background(topBarColor),
             navigationIcon = {
                 IconButton(onClick = {
                     onBackIconClick()
                 }) {
                     Icon(
-                        vectorResource(id = R.drawable.ic_arrow_back),
+                        painter = painterResource(id = R.drawable.ic_arrow_back),
+                        contentDescription = null, //TODO
                         modifier = Modifier.padding(start = 8.dp),
                         tint = Color.White
                     )
                 }
             },
             actions = {
-                Box(shape = CircleShape, modifier = Modifier.size(40.dp)) {
-                    ImageLoader(user.imageUrl)
+                Box(modifier = Modifier.size(40.dp).clip(CircleShape)) {
+                    Image(
+                        painter = rememberImagePainter(user.imageUrl),
+                        contentDescription = null,
+                    )
                 }
             },
             title = {

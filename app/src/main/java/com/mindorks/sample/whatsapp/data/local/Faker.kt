@@ -1,5 +1,6 @@
 package com.mindorks.sample.whatsapp.data.local
 
+
 import com.mindorks.sample.whatsapp.R
 import com.mindorks.sample.whatsapp.data.model.Call
 import com.mindorks.sample.whatsapp.data.model.Chat
