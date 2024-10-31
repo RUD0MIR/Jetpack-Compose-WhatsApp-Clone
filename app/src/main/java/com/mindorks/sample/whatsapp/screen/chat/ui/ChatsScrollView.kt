@@ -30,6 +30,7 @@ fun ChatsScrollView(modifier: Modifier = Modifier, chat: List<Conversation>) {
             .fillMaxHeight()
             .background(color = DarkestGreen)
             .padding(horizontal = 16.dp)
+            .padding(top = 8.dp)
     ) {
         items(chat) {
             if (it.id == 2) {
